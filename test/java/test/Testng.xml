@@ -1,0 +1,53 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Test_all_tasks">
+
+	<test name="task01">
+        <classes>
+            <class name="test.task01.Task01Test"/>
+        </classes>
+    </test>
+	<test name="task02">
+        <classes>
+            <class name="test.task02.Task02Test"/>
+        </classes>
+    </test>
+	<test name="task03">
+        <classes>
+            <class name="test.task03.AppTest"/>
+			<class name="test.task03.ReadTrianglesTest"/>
+			<class name="test.task03.TriangleSortTest"/>
+			<class name="test.task03.TriangleSortTest"/>
+        </classes>
+    </test>
+	<test name="task04">
+        <classes>
+            <class name= "test.task04.FileCountOperWithFileTest"/>
+			<class name="test.task04.FileOperationsExcTest"/>
+			<class name= "test.task04.FileReplaceinFileTest"/>
+        </classes>
+    </test>
+    <test name="task05">
+        <classes>
+            <class name="test.task05.ConvertDigitsTest"/>
+        </classes>
+    </test>
+	<test name="task06">
+        <classes>
+            <class name="test.task06.CountAlgorithmsTest"/>
+			<class name="test.task06.AppTest"/>
+        </classes>
+    </test>
+	<test name="task07">
+        <classes>
+            <class name="test.task07.SequenceTest"/>
+			<class name="test.task07.AppTest"/>
+        </classes>
+    </test>
+	<test name="task08">
+        <classes>
+            <class name="test.task08.AppTest"/>
+			<class name="test.task08.AppTest"/>
+        </classes>
+    </test>
+</suite>
