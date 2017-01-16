@@ -6,6 +6,10 @@
  */
 package com.softserve.edu.task03;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Main class provides functionality to read triangles one by one
@@ -21,15 +25,14 @@ public class App {
      * ans print their sizes in centimeters to console
      */
     public static void main(final String[] args) {
-        ReadTrianglesAndSort readTriangles = new ReadTrianglesAndSort();
-        Triangle nextTriangle = null;
+        Triangle nextTriangle;
+        List<Triangle> listOfTriangles = new ArrayList<>();
 
         while (true) {
             try {
                 System.out.println("Enter triangle parameters");
-                nextTriangle = readTriangles
-                        .getTrianglefromString(ConsoleHelper.readStringParam());
-                readTriangles.getTriangelList().add(nextTriangle);
+                nextTriangle = new Triangle(ConsoleHelper.readStringParam());
+                listOfTriangles.add(nextTriangle);
                 /*add read triangle to the list of triangles*/
                 System.out.println("Do you want to add one more triangle?");
                 String userAnswer = ConsoleHelper.readStringParam();
@@ -40,8 +43,8 @@ public class App {
                     just start new loop iteration*/
                     continue;
                 }
-                    readTriangles.
-                            sortTriangleList(new ComparatorTriangleByDescArea());
+
+                sortTriangleList(listOfTriangles, new ComparatorTriangleByDescArea());
                     break;
                     /*sort triangle list using comparator*/
             } catch (TriangleInvalidArgException invArgExc) {
@@ -57,8 +60,13 @@ public class App {
         }
         System.out.println("============= Triangles list: ===============");
         /*print all read triangles to console*/
-        for (Triangle triangle : readTriangles.getTriangelList()) {
+        for (Triangle triangle : listOfTriangles) {
             System.out.println(triangle);
         }
+    }
+
+    public static void sortTriangleList(List<Triangle> triangelList,
+                                        final Comparator<Triangle> comparator) {
+        Collections.sort(triangelList, comparator);
     }
 }
