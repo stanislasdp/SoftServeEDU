@@ -10,8 +10,9 @@ package com.softserve.edu.task05;
  * @version 1.0
  */
 public class ConverDigits {
-    private ConvertDigitPart convertDigits = new ConvertDigitPart();
+    private ConvertDigitParts convertDigits = new ConvertDigitParts();
     private  boolean isMinusShouldBeAppended = false;
+    private static final int ZERO = 0;
     private static final int ONE = 1;
     private static final int TWO = 2;
     private static final int THREE = 3;
@@ -22,6 +23,9 @@ public class ConverDigits {
     private static final int EIGHT = 8;
     private static final int NINE = 9;
     private static final int TEN = 10;
+    private static final int DIGITS_DOZENS_LIMIT_UP = 19;
+    private static final int DIGITS_DOZENS_LIMIT_LOW = 10;
+    private static final String WHITE_SPACE = " ";
 
 
     /**
@@ -71,7 +75,7 @@ public class ConverDigits {
             case ONE:   /*in case of single digit*/
                 convertDigits.convDigitToString(digit);
                 break;
-            default:    /*if digit length more than for billions thow exception*/
+            default:    /*if digit length more than for billions throw exception*/
             	throw new IllegalArgumentException("Not supported digit length");
         }
         return convertDigits.toString();
@@ -82,7 +86,7 @@ public class ConverDigits {
      * @author Stas Kiryan
      * @version 1.0
      */
-    private  class ConvertDigitPart {
+    private class ConvertDigitParts {
 
         private StringBuilder stringBuilder = new StringBuilder();
         private boolean endAddToSb = false;
@@ -91,11 +95,11 @@ public class ConverDigits {
         	if (!endAddToSb) {
                 appendMinusIfPresent();
                 StringBuilder helpSB = new StringBuilder().append(fullDigit).reverse();
-                helpSB.setLength(1);
+                helpSB.setLength(ONE);
                 helpSB.reverse();
-                int firstDigit = Integer.parseInt(helpSB.substring(0, 1));
-                stringBuilder.append(Digits.UNITS.getValues()[firstDigit + 1]);
-                stringBuilder.append(" ");
+                int firstDigit = Integer.parseInt(helpSB.substring(ZERO, ONE));
+                stringBuilder.append(Digits.UNITS.getValues()[firstDigit + ONE]);
+                stringBuilder.append(WHITE_SPACE);
             }
         }
 
@@ -106,22 +110,22 @@ public class ConverDigits {
                 StringBuilder helpSB = new StringBuilder().append(fullDigit).reverse();
                 helpSB.setLength(TWO);
                 helpSB.reverse();
-                int digitForDigit = Integer.parseInt(helpSB.toString().substring(1, 2));
+                int digitForDigit = Integer.parseInt(helpSB.toString().substring(ONE, TWO));
                 stringBuilder.append(Digits.DOZEN.getValues()[digitForDigit]);
-                stringBuilder.append(" ");
+                stringBuilder.append(WHITE_SPACE);
             }
         }
 
         private void convDozensToString(int fullDigit) {
             if (!endAddToSb) {
             	appendMinusIfPresent();
-                StringBuilder helpSB = new StringBuilder().append(fullDigit).reverse();
-                helpSB.setLength(TWO);
-                helpSB.reverse();
-                int firstDigit = Integer.parseInt(helpSB.substring(0, 1));
-                stringBuilder.append(Digits.DOZENS.getValues()[firstDigit - 1]);
-                stringBuilder.append(" ");
-                if (fullDigit % 10 == 0) {
+                StringBuilder methodSb = new StringBuilder().append(fullDigit).reverse();
+                methodSb.setLength(TWO);
+                methodSb.reverse();
+                int firstDigit = Integer.parseInt(methodSb.substring(ZERO, ONE));
+                stringBuilder.append(Digits.DOZENS.getValues()[firstDigit - ONE]);
+                stringBuilder.append(WHITE_SPACE);
+                if (fullDigit % Digits.DOZENS.getDigitPos() == ZERO) {
                     endAddToSb = true;
                 }
                 convDigitToString(fullDigit);
@@ -130,15 +134,15 @@ public class ConverDigits {
 
         private void convTwoDigitsToString(int fullDigit) {
             if (!endAddToSb) {
-                StringBuilder helpSB = new StringBuilder().
+                StringBuilder methodSB = new StringBuilder().
                         append(fullDigit).reverse();
-                helpSB.setLength(TWO);
-                helpSB.reverse();
-                int digitForDozens = Integer.parseInt((helpSB.toString()));
-                int digitForDigit = Integer.parseInt(helpSB.substring(1, 2));
-                if (digitForDozens > 19) {
+                methodSB.setLength(TWO);
+                methodSB.reverse();
+                int digitForDozens = Integer.parseInt((methodSB.toString()));
+                int digitForDigit = Integer.parseInt(methodSB.substring(ONE, TWO));
+                if (digitForDozens > DIGITS_DOZENS_LIMIT_UP) {
                     convDozensToString(fullDigit);
-                } else if (digitForDozens >= 10) {
+                } else if (digitForDozens >= Digits.DOZENS.getDigitPos()) {
                     convFirstDigitMoreThanTenToString(fullDigit);
                 } else {
                     convDigitToString(digitForDigit);
@@ -149,13 +153,13 @@ public class ConverDigits {
         private void convHundredsToString(int fullDigit) {
             if (!endAddToSb) {
             	appendMinusIfPresent();
-                StringBuilder helpSB = new StringBuilder().append(fullDigit).reverse();
-                helpSB.setLength(THREE);
-                helpSB.reverse();
-                int firstDigit = Integer.parseInt((helpSB.substring(0, 1)));
+                StringBuilder methodSB = new StringBuilder().append(fullDigit).reverse();
+                methodSB.setLength(THREE);
+                methodSB.reverse();
+                int firstDigit = Integer.parseInt((methodSB.substring(ZERO, ONE)));
                 stringBuilder.append(Digits.HUNDREDS.getValues()[firstDigit]);
-                stringBuilder.append(" ");
-                if (fullDigit % 100 == 0)  {
+                stringBuilder.append(WHITE_SPACE);
+                if (fullDigit % Digits.HUNDREDS.getDigitPos() == ZERO)  {
                     endAddToSb = true;
                 }
                 convTwoDigitsToString(fullDigit);
@@ -165,23 +169,17 @@ public class ConverDigits {
         private void convThousandsToString(int fullDigit) {
             if (!endAddToSb) {
             	appendMinusIfPresent();
-                StringBuilder helpSB = new StringBuilder().append(fullDigit).reverse();
-                helpSB.setLength(FOUR);
-                helpSB.reverse();
-                if (fullDigit % 1000 == 0)  {
+                StringBuilder methodSB= new StringBuilder().append(fullDigit).reverse();
+                methodSB.setLength(FOUR);
+                methodSB.reverse();
+                if (fullDigit % Digits.THOUSANDS.getDigitPos() == ZERO)  {
                     endAddToSb = true;
                 }
-                int firstDigit = Integer.parseInt(helpSB.substring(0, 1));
+                int firstDigit = Integer.parseInt(methodSB.substring(ZERO, ONE));
                 stringBuilder.append(Digits.THOUSANDS.getValues()[firstDigit]);
-                stringBuilder.append(" ");
-                if (firstDigit == 1) {
-                    stringBuilder.append("тысяча");
-                } else if (firstDigit > 1 && firstDigit < 5) {
-                    stringBuilder.append("тысячи");
-                } else {
-                        stringBuilder.append("тысяч");
-                }
-                stringBuilder.append(" ");
+                stringBuilder.append(WHITE_SPACE);
+                stringBuilder.append(Digits.THOUSANDS.getDigitRepresent(firstDigit));
+                stringBuilder.append(WHITE_SPACE);
                 convHundredsToString(fullDigit);
             }
         }
@@ -189,22 +187,22 @@ public class ConverDigits {
         private void convDozensThousandToString(int fullDigit) {
             if (!endAddToSb) {
             	appendMinusIfPresent();
-                StringBuilder helpSB = new StringBuilder().append(fullDigit).reverse();
-                helpSB.setLength(FIVE);
-                helpSB.reverse();
-                int intForChmethod = Integer.parseInt((helpSB.substring(0, 2)));
-                if (intForChmethod > 19) {
-                    int temp = Integer.parseInt(((helpSB.substring(0, 1))));
-                    stringBuilder.append(Digits.DOZENS.getValues()[temp - 1]);
-                    stringBuilder.append(" ");
+                StringBuilder methodSB = new StringBuilder().append(fullDigit).reverse();
+                methodSB.setLength(FIVE);
+                methodSB.reverse();
+                int intForChmethod = Integer.parseInt((methodSB.substring(ZERO, TWO)));
+                if (intForChmethod > DIGITS_DOZENS_LIMIT_UP) {
+                    int temp = Integer.parseInt(((methodSB.substring(ZERO, ONE))));
+                    stringBuilder.append(Digits.DOZENS.getValues()[temp - ONE]);
+                    stringBuilder.append(WHITE_SPACE);
                     convThousandsToString(fullDigit);
 
-                } else if (intForChmethod >= 10) {
-                    int temp = Integer.parseInt(((helpSB.substring(1, 2))));
+                } else if (intForChmethod >= DIGITS_DOZENS_LIMIT_LOW) {
+                    int temp = Integer.parseInt(((methodSB.substring(ONE, TWO))));
                     stringBuilder.append(Digits.DOZEN.getValues()[temp]);
-                    stringBuilder.append(" ");
-                    stringBuilder.append("тысяч");
-                    stringBuilder.append(" ");
+                    stringBuilder.append(WHITE_SPACE);
+                    stringBuilder.append(Digits.THOUSANDS.getDigitRepresent());
+                    stringBuilder.append(WHITE_SPACE);
                     if (!endAddToSb) {
                         convHundredsToString(fullDigit);
                     }
@@ -217,53 +215,46 @@ public class ConverDigits {
         private void convHundredThousandToString(int fullDigit) {
             if (!endAddToSb) {
             	appendMinusIfPresent();
-                StringBuilder tempSBToRev  =  new StringBuilder().append(fullDigit).reverse();
-                tempSBToRev.setLength(SIX);
-                tempSBToRev.reverse();
-                int firstThreeDigits = Integer.parseInt(tempSBToRev.substring(0, 3));
+                StringBuilder methodSB = new StringBuilder().append(fullDigit).reverse();
+                methodSB.setLength(SIX);
+                methodSB.reverse();
+                int firstThreeDigits = Integer.parseInt(methodSB.substring(ZERO, THREE));
 
-                if (firstThreeDigits == 0) {
+                if (firstThreeDigits == ZERO) {
                     convHundredsToString(fullDigit);
                     return;
                     /*when first three digits are zeroes, then go directly to hundreds*/
                 }
 
-                int firsTDigit = Integer.parseInt(tempSBToRev.substring(0, 1));
+                int firsTDigit = Integer.parseInt(methodSB.substring(ZERO, ONE));
                 stringBuilder.append(Digits.HUNDREDS.getValues()[firsTDigit]);
-                stringBuilder.append(" ");
-                if (firstThreeDigits % 100 == 0) {
-                    stringBuilder.append("тысяч");
-                    stringBuilder.append(" ");
+                stringBuilder.append(WHITE_SPACE);
+                if (firstThreeDigits % Digits.HUNDREDS.getDigitPos() == ZERO) {
+                    stringBuilder.append(Digits.THOUSANDS.getDigitRepresent());
+                    stringBuilder.append(WHITE_SPACE);
                     convHundredsToString(fullDigit);
                 } else {
                     convDozensThousandToString(fullDigit);
                 }
             }
-
         }
+
         private void convMillionsToString(int fullDigit) {
             if (!endAddToSb) {
             	appendMinusIfPresent();
-                StringBuilder tempSBToRev  =  new StringBuilder().append(fullDigit).reverse();
-                tempSBToRev.setLength(SEVEN);
-                tempSBToRev.reverse();
-                int fullDigitToMill = Integer.parseInt(tempSBToRev.toString());
+                StringBuilder methodSB =  new StringBuilder().append(fullDigit).reverse();
+                methodSB .setLength(SEVEN);
+                methodSB .reverse();
+                int fullDigitToMill = Integer.parseInt(methodSB .toString());
 
-                if (fullDigitToMill % 1_000_000 == 0) {
+                if (fullDigitToMill % Digits.MILLIONS.getDigitPos() == ZERO) {
                     endAddToSb = true;
                 }
-                int millionFirstDigit = Integer.parseInt(tempSBToRev.substring(0, 1));
-                stringBuilder.append(Digits.UNITS.getValues()[millionFirstDigit + 1]);
-                stringBuilder.append(" ");
-
-                if (millionFirstDigit == 1) {
-                    stringBuilder.append("миллион");
-                } else if (millionFirstDigit  > 1 && millionFirstDigit < 5) {
-                    stringBuilder.append("миллиона");
-                } else {
-                    stringBuilder.append("миллионов");
-                }
-                stringBuilder.append(" ");
+                int millionFirstDigit = Integer.parseInt(methodSB.substring(ZERO, ONE));
+                stringBuilder.append(Digits.MILLIONS.getValues()[millionFirstDigit + ONE]);
+                stringBuilder.append(WHITE_SPACE);
+                stringBuilder.append(Digits.MILLIONS.getDigitRepresent(millionFirstDigit));
+                stringBuilder.append(WHITE_SPACE);
                 convHundredThousandToString(fullDigit);
             }
         }
@@ -271,25 +262,25 @@ public class ConverDigits {
         private void convDozensMillionsToString(int fullDigit) {
             if (!endAddToSb) {
             	appendMinusIfPresent();
-                if (fullDigit % 10_000_000 == 0) {
+                if (fullDigit % (TEN * Digits.MILLIONS.getDigitPos()) == ZERO) {
                     endAddToSb =true;
                 }
-                StringBuilder tempSBToRev = new StringBuilder().append(fullDigit).reverse();
-                tempSBToRev.setLength(EIGHT);
-                tempSBToRev.reverse();
+                StringBuilder methodSB  = new StringBuilder().append(fullDigit).reverse();
+                methodSB .setLength(EIGHT);
+                methodSB .reverse();
 
-                int intForChmethod = Integer.parseInt((tempSBToRev.substring(0, 2)));
-                if (intForChmethod > 19) {
-                    int temp = Integer.parseInt(((tempSBToRev.substring(0, 1))));
-                    stringBuilder.append(Digits.DOZENS.getValues()[temp - 1]);
-                    stringBuilder.append(" ");
+                int intForChmethod = Integer.parseInt((methodSB.substring(ZERO, TWO)));
+                if (intForChmethod > DIGITS_DOZENS_LIMIT_UP) {
+                    int firstDigit = Integer.parseInt(((methodSB.substring(ZERO, ONE))));
+                    stringBuilder.append(Digits.DOZENS.getValues()[firstDigit - ONE]);
+                    stringBuilder.append(WHITE_SPACE);
                     convMillionsToString(fullDigit);
-                } else if (intForChmethod >= 10) {
-                    int temp = Integer.parseInt((tempSBToRev.substring(1, 2)));
+                } else if (intForChmethod >= Digits.DOZEN.getDigitPos()) {
+                    int temp = Integer.parseInt((methodSB.substring(ONE, TWO)));
                     stringBuilder.append(Digits.DOZEN.getValues()[temp]);
-                    stringBuilder.append(" ");
-                    stringBuilder.append("миллионов");
-                    stringBuilder.append(" ");
+                    stringBuilder.append(WHITE_SPACE);
+                    stringBuilder.append(Digits.MILLIONS.getDigitRepresent());
+                    stringBuilder.append(WHITE_SPACE);
                     if (!endAddToSb) {
                         convHundredThousandToString(fullDigit);
                     }
@@ -299,30 +290,29 @@ public class ConverDigits {
             }
         }
 
-
         private void convHundredMillionsToString(int fullDigit) {
             if (!endAddToSb) {
             	appendMinusIfPresent();
-                if (fullDigit % 100_000_000 == 0) {
+                if (fullDigit % (TEN * TEN * Digits.MILLIONS.getDigitPos()) == ZERO) {
                     endAddToSb = true;
                 }
-                StringBuilder tempSBToRev  =  new StringBuilder().append(fullDigit).reverse();
-                tempSBToRev.setLength(NINE);
-                tempSBToRev.reverse();
-                int firstThreeDigits = Integer.parseInt(tempSBToRev.substring(0, 3));
+                StringBuilder methodSB = new StringBuilder().append(fullDigit).reverse();
+                methodSB.setLength(NINE);
+                methodSB.reverse();
+                int firstThreeDigits = Integer.parseInt(methodSB.substring(ZERO, THREE));
 
-                if (firstThreeDigits == 0) {
+                if (firstThreeDigits == ZERO) {
                     convHundredThousandToString(fullDigit);
                     return;
                     /*when first three digits are zeroes, then go directly to hundreds*/
                 }
 
-                int firsTDigit = Integer.parseInt(tempSBToRev.substring(0, 1));
+                int firsTDigit = Integer.parseInt(methodSB .substring(ZERO, ONE));
                 stringBuilder.append(Digits.HUNDREDS.getValues()[firsTDigit]);
-                stringBuilder.append(" ");
-                if (firstThreeDigits % 100 == 0) {
-                    stringBuilder.append("миллионов");
-                    stringBuilder.append(" ");
+                stringBuilder.append(WHITE_SPACE);
+                if (firstThreeDigits % Digits.HUNDREDS.getDigitPos() == ZERO) {
+                    stringBuilder.append(Digits.MILLIONS.getDigitRepresent());
+                    stringBuilder.append(WHITE_SPACE);
                     convHundredThousandToString(fullDigit);
                 } else {
                     convDozensMillionsToString(fullDigit);
@@ -334,26 +324,19 @@ public class ConverDigits {
 
             if (!endAddToSb) {
                 appendMinusIfPresent();
-                StringBuilder tempSBToRev  =  new StringBuilder().append(fullDigit).reverse();
-                tempSBToRev.setLength(TEN);
-                tempSBToRev.reverse();
-                int fullDigitToMill = Integer.parseInt(tempSBToRev.toString());
+                StringBuilder methodSB  = new StringBuilder().append(fullDigit).reverse();
+                methodSB .setLength(TEN);
+                methodSB.reverse();
+                int fullDigitToMill = Integer.parseInt(methodSB.toString());
 
-                if (fullDigitToMill % 1_000_000_000 == 0) {
+                if (fullDigitToMill % Digits.BILLIONS.getDigitPos() == ZERO) {
                     endAddToSb = true;
                 }
-                int billionFirstDigit = Integer.parseInt(tempSBToRev.substring(0, 1));
-                stringBuilder.append(Digits.UNITS.getValues()[billionFirstDigit + 1]);
-                stringBuilder.append(" ");
-
-                if (billionFirstDigit == 1) {
-                    stringBuilder.append("миллиард");
-                } else if (billionFirstDigit > 1 && billionFirstDigit < 4) {
-                    stringBuilder.append("миллиарда");
-                } else {
-                    stringBuilder.append("миллиардов");
-                }
-                stringBuilder.append(" ");
+                int billionFirstDigit = Integer.parseInt(methodSB.substring(ZERO, ONE));
+                stringBuilder.append(Digits.UNITS.getValues()[billionFirstDigit + ONE]);
+                stringBuilder.append(WHITE_SPACE);
+                stringBuilder.append(Digits.BILLIONS.getDigitRepresent(billionFirstDigit));
+                stringBuilder.append(WHITE_SPACE);
                 convHundredMillionsToString(fullDigit);
             }
 
@@ -361,8 +344,8 @@ public class ConverDigits {
 
         private void appendMinusIfPresent() {
         	if (isMinusShouldBeAppended) {
-        		stringBuilder.append("минус");
-        		stringBuilder.append(" ");
+        		stringBuilder.append(Digits.MINUS_SIGN);
+        		stringBuilder.append(WHITE_SPACE);
         		isMinusShouldBeAppended = false;
         	}
         }

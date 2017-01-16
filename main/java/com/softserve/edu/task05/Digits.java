@@ -8,7 +8,8 @@ package com.softserve.edu.task05;
  * Digits enum is used to store digit representation for each particular digit
  * depending to which category it belongs.
  * it to the console
- * @author Stas kiryan
+ *
+ * @author Stas Kiryan
  * @version 1.0
  */
 public enum Digits {
@@ -16,63 +17,235 @@ public enum Digits {
      * Units - used for single digit.
      */
     UNITS {
-                @Override
-                String[] getValues() {
-                    return new String[] {"","ноль", "один", "два", "три", "четыре", "пять",
-                            "шесть", "семь", "восемь", "девять"};
-                }
-            },
+        @Override
+        String[] getValues() {
+            return new String[]{"", "ноль", "один", "два", "три", "четыре", "пять",
+                    "шесть", "семь", "восемь", "девять"};
+        }
+
+        int getDigitPos() {
+            return 1;
+        }
+
+        @Override
+        String getDigitRepresent(int count) {
+            throw new IllegalArgumentException("operation is not supported");
+        }
+
+        @Override
+        String getDigitRepresent() {
+            throw new IllegalArgumentException("operation is not supported");
+        }
+    },
 
     /**
-     * Dozen - used for dozens, dozens of thousands (if lower than 20), dozens of millions.
+     * Dozen - used for dozens, dozens of thousands (if lower than 20)".
      */
     DOZEN {
+        @Override
+        String[] getValues() {
+            return new String[]{"десять", "одиннадцать", "двенадцать", "тринадцать",
+                    "четырнадцать", "пятнадцать", "шестнадцать", "семьнадцать",
+                    "восемнадцать", "девятнадцать"};
+        }
 
-                @Override
-                String[] getValues() {
-                    return new String[] {"десять", "одиннадцать", "двенадцать", "тринадцать",
-                            "четырнадцать", "пятнадцать", "шестнадцать", "семьнадцать",
-                            "восемнадцать", "девятнадцать"};
-                }
-            },
+        int getDigitPos() {
+            return 10;
+        }
+
+        @Override
+        String getDigitRepresent(int count) {
+            throw new IllegalArgumentException("operation is not supported");
+        }
+
+        @Override
+        String getDigitRepresent() {
+            throw new IllegalArgumentException("operation is not supported");
+        }
+
+    },
+
 
     /**
-     * Dozens - used for dozens, dozens of thousands (if higher than 19), dozens of millions
+     * Dozens - used for dozens, dozens of thousands (if higher than 19)"
      */
     DOZENS {
-                @Override
-                String[] getValues() {
-                    return new String[] {"", "двадцать", "тридцать", "сорок",
-                            "пятьдесят", "шестдесят", "семьдесят", "восемьдесят", "девяносто"};
-                }
-            },
+        @Override
+        String[] getValues() {
+            return new String[]{"", "двадцать", "тридцать", "сорок",
+                    "пятьдесят", "шестдесят", "семьдесят", "восемьдесят", "девяносто"};
+        }
+
+        int getDigitPos() {
+            return 10;
+        }
+
+        @Override
+        String getDigitRepresent(int count) {
+            throw new IllegalArgumentException("operation is not supported");
+        }
+
+        @Override
+        String getDigitRepresent() {
+            throw new IllegalArgumentException("operation is not supported");
+        }
+    },
 
     /**
-     * Hundreds - used for hundreds, hundreds of thousands, hundsred of millions.
+     * Hundreds - used for hundreds.
      */
     HUNDREDS {
-                @Override
-                String[] getValues() {
-                    return new String[] {"", "сто", "двести", "триста", "четыреста",
-                            "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот"};
-                }
-            },
+        @Override
+        String[] getValues() {
+            return new String[]{"", "сто", "двести", "триста", "четыреста",
+                    "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот"};
+        }
+
+        int getDigitPos() {
+            return 100;
+        }
+
+        @Override
+        String getDigitRepresent(int count) {
+            throw new IllegalArgumentException("operation is not supported");
+        }
+
+        @Override
+        String getDigitRepresent() {
+            throw new IllegalArgumentException("operation is not supported");
+        }
+    },
 
     /**
      * Thousands - used for thousands
      */
     THOUSANDS {
-                @Override
-                String[] getValues() {
-                    return new String[] {"", "одна", "две", "три", "четыре",
-                            "пять", "шесть", "семь", "восемь", "девять"};
-                }
-            };
+        @Override
+        String[] getValues() {
+            return new String[]{"", "одна", "две", "три", "четыре",
+                    "пять", "шесть", "семь", "восемь", "девять"};
+        }
+
+        int getDigitPos() {
+            return 1000;
+        }
+
+        @Override
+        String getDigitRepresent(int count) {
+            if (count == 1) {
+                return "тысяча";
+            } else if (count >= 1 && count <= 4) {
+                return "тысячи";
+            } else if ((count > 4 && count <= 9) || count == 0) {
+                return getDigitRepresent();
+            }
+            throw new IllegalArgumentException();
+        }
+
+        @Override
+        String getDigitRepresent() {
+            return "тысяч";
+        }
+    },
 
     /**
-     * return array of representations corresponing to each enum value.
+     * Hundreds - used for millions.
+     */
+    MILLIONS {
+        @Override
+        String[] getValues() {
+            return UNITS.getValues();
+        }
+
+        @Override
+        int getDigitPos() {
+            return 100_000_0;
+        }
+
+        @Override
+        String getDigitRepresent(int count) {
+            if (count == 1) {
+                return "миллион";
+            } else if (count >= 1 && count <= 4) {
+                return "миллиона";
+            } else if (count > 4 && count <= 9) {
+                return getDigitRepresent();
+            }
+            throw new IllegalArgumentException("digit not supported");
+        }
+
+        @Override
+        String getDigitRepresent() {
+            return "миллионов";
+        }
+    },
+
+    /**
+     * Hundreds - used for billions.
+     */
+    BILLIONS {
+        @Override
+        String[] getValues() {
+            return UNITS.getValues();
+        }
+
+        @Override
+        int getDigitPos() {
+            return 1_000_000_000;
+        }
+
+        @Override
+        String getDigitRepresent(int count) {
+
+            if (count == 1) {
+                return "миллиард";
+            } else if (count > 1 && count <= 4) {
+                return "миллиарда";
+            } else if (count > 4) {
+                return getDigitRepresent();
+            }
+            throw new IllegalArgumentException("digit not supported");
+
+        }
+
+        @Override
+        String getDigitRepresent() {
+            return "миллиардов";
+        }
+    };
+
+
+    public static final String MINUS_SIGN = "минус";
+
+
+    /**
+     * return array of representations corresponding to each enum value.
      *
      * @return the string [ ]
      */
     abstract String[] getValues();
+
+    /**
+     * return array of representations corresponding to each enum value.
+     *
+     * @return digit position to calculate specific digit for current enum value[ ]
+     */
+    abstract int getDigitPos();
+
+    /**
+     * overloaded version of getDigitRepresent()
+     * return always digit suffix depend on digit "sex" or plural
+     * @return  - String representation
+     */
+    abstract String getDigitRepresent(int count);
+
+
+    /**
+     * return return digit suffix plural representation
+     * (Enum's implementation may throw IllegalArgumentException if this operation
+     * is not applicable for used enum)
+     * @return  - String representation
+     */
+    abstract String getDigitRepresent();
+
 }
