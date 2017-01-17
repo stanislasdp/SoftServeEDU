@@ -19,21 +19,21 @@ public enum Digits {
     UNITS {
         @Override
         String[] getValues() {
-            return new String[]{"", "ноль", "один", "два", "три", "четыре", "пять",
-                    "шесть", "семь", "восемь", "девять"};
+            return new String[]{"", "ноль", "один", "два", "три", "четыре",
+                    "пять", "шесть", "семь", "восемь", "девять"};
         }
 
-        int getDigitPos() {
+        int getDigitBasis() {
             return 1;
         }
 
         @Override
-        String getDigitRepresent(int count) {
+        String getDigitSuffix(int count) {
             throw new IllegalArgumentException("operation is not supported");
         }
 
         @Override
-        String getDigitRepresent() {
+        String getDigitSuffix() {
             throw new IllegalArgumentException("operation is not supported");
         }
     },
@@ -49,17 +49,17 @@ public enum Digits {
                     "восемнадцать", "девятнадцать"};
         }
 
-        int getDigitPos() {
+        int getDigitBasis() {
             return 10;
         }
 
         @Override
-        String getDigitRepresent(int count) {
+        String getDigitSuffix(int count) {
             throw new IllegalArgumentException("operation is not supported");
         }
 
         @Override
-        String getDigitRepresent() {
+        String getDigitSuffix() {
             throw new IllegalArgumentException("operation is not supported");
         }
 
@@ -72,21 +72,21 @@ public enum Digits {
     DOZENS {
         @Override
         String[] getValues() {
-            return new String[]{"", "двадцать", "тридцать", "сорок",
-                    "пятьдесят", "шестдесят", "семьдесят", "восемьдесят", "девяносто"};
+            return new String[]{"", "двадцать", "тридцать", "сорок", "пятьдесят",
+                    "шестдесят", "семьдесят", "восемьдесят", "девяносто"};
         }
 
-        int getDigitPos() {
+        int getDigitBasis() {
             return 10;
         }
 
         @Override
-        String getDigitRepresent(int count) {
+        String getDigitSuffix(int count) {
             throw new IllegalArgumentException("operation is not supported");
         }
 
         @Override
-        String getDigitRepresent() {
+        String getDigitSuffix() {
             throw new IllegalArgumentException("operation is not supported");
         }
     },
@@ -97,21 +97,21 @@ public enum Digits {
     HUNDREDS {
         @Override
         String[] getValues() {
-            return new String[]{"", "сто", "двести", "триста", "четыреста",
-                    "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот"};
+            return new String[]{"", "сто", "двести", "триста", "четыреста", "пятьсот",
+                    "шестьсот", "семьсот", "восемьсот", "девятьсот"};
         }
 
-        int getDigitPos() {
+        int getDigitBasis() {
             return 100;
         }
 
         @Override
-        String getDigitRepresent(int count) {
+        String getDigitSuffix(int count) {
             throw new IllegalArgumentException("operation is not supported");
         }
 
         @Override
-        String getDigitRepresent() {
+        String getDigitSuffix() {
             throw new IllegalArgumentException("operation is not supported");
         }
     },
@@ -126,30 +126,30 @@ public enum Digits {
                     "пять", "шесть", "семь", "восемь", "девять"};
         }
 
-        int getDigitPos() {
+        int getDigitBasis() {
             return 1000;
         }
 
         @Override
-        String getDigitRepresent(int count) {
+        String getDigitSuffix(int count) {
             if (count == 1) {
                 return "тысяча";
             } else if (count >= 1 && count <= 4) {
                 return "тысячи";
             } else if ((count > 4 && count <= 9) || count == 0) {
-                return getDigitRepresent();
+                return getDigitSuffix();
             }
             throw new IllegalArgumentException();
         }
 
         @Override
-        String getDigitRepresent() {
+        String getDigitSuffix() {
             return "тысяч";
         }
     },
 
     /**
-     * Hundreds - used for millions.
+     * MILLIONS  - used for millions.
      */
     MILLIONS {
         @Override
@@ -158,30 +158,30 @@ public enum Digits {
         }
 
         @Override
-        int getDigitPos() {
+        int getDigitBasis() {
             return 100_000_0;
         }
 
         @Override
-        String getDigitRepresent(int count) {
+        String getDigitSuffix(int count) {
             if (count == 1) {
                 return "миллион";
             } else if (count >= 1 && count <= 4) {
                 return "миллиона";
             } else if (count > 4 && count <= 9) {
-                return getDigitRepresent();
+                return getDigitSuffix();
             }
             throw new IllegalArgumentException("digit not supported");
         }
 
         @Override
-        String getDigitRepresent() {
+        String getDigitSuffix() {
             return "миллионов";
         }
     },
 
     /**
-     * Hundreds - used for billions.
+     * BILLIONS - used for billions.
      */
     BILLIONS {
         @Override
@@ -190,26 +190,26 @@ public enum Digits {
         }
 
         @Override
-        int getDigitPos() {
+        int getDigitBasis() {
             return 1_000_000_000;
         }
 
         @Override
-        String getDigitRepresent(int count) {
+        String getDigitSuffix(int count) {
 
             if (count == 1) {
                 return "миллиард";
             } else if (count > 1 && count <= 4) {
                 return "миллиарда";
             } else if (count > 4) {
-                return getDigitRepresent();
+                return getDigitSuffix();
             }
             throw new IllegalArgumentException("digit not supported");
 
         }
 
         @Override
-        String getDigitRepresent() {
+        String getDigitSuffix() {
             return "миллиардов";
         }
     };
@@ -230,15 +230,14 @@ public enum Digits {
      *
      * @return digit position to calculate specific digit for current enum value[ ]
      */
-    abstract int getDigitPos();
+    abstract int getDigitBasis();
 
     /**
-     * overloaded version of getDigitRepresent()
+     * overloaded version of getDigitSuffix()
      * return always digit suffix depend on digit "sex" or plural
      * @return  - String representation
      */
-    abstract String getDigitRepresent(int count);
-
+    abstract String getDigitSuffix(int count);
 
     /**
      * return return digit suffix plural representation
@@ -246,6 +245,6 @@ public enum Digits {
      * is not applicable for used enum)
      * @return  - String representation
      */
-    abstract String getDigitRepresent();
+    abstract String getDigitSuffix();
 
 }
