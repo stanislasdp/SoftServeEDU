@@ -21,7 +21,7 @@ import com.softserve.edu.task03.App;
 import com.softserve.edu.task03.ConsoleHelper;
 
 
-public class AppTest {
+public class AppIntegrationTest {
     private static final ByteArrayOutputStream outСontent = new ByteArrayOutputStream();
     private static  Field inContent;
     private static PrintStream  oldOutContent = System.out;
@@ -59,7 +59,7 @@ public class AppTest {
         App.main(null);
         Assert.assertTrue(outСontent.toString().contains("============= Triangles list:"
                 + " ==============="));
-        Assert.assertTrue(outСontent.toString().contains("[Name]: 3.87 cm"));
+        Assert.assertTrue(outСontent.toString().contains("[Name]: 3.87 cm2"));
     }
     
     
@@ -78,8 +78,8 @@ public class AppTest {
         App.main(null);
         Assert.assertTrue(outСontent.toString().contains("============= Triangles list:"
                 + " ==============="));
-        Assert.assertTrue(outСontent.toString().contains("[Name]: 3.87 cm"));
-        Assert.assertTrue(outСontent.toString().contains("[Name2]: 0.43 cm"));
+        Assert.assertTrue(outСontent.toString().contains("[Name]: 3.87 cm2"));
+        Assert.assertTrue(outСontent.toString().contains("[Name2]: 0.43 cm2"));
     }
     
     
@@ -98,8 +98,8 @@ public class AppTest {
         App.main(null);
         Assert.assertTrue(outСontent.toString().contains("============= Triangles list:"
                 + " ==============="));
-        Assert.assertTrue(outСontent.toString().contains("[Name]: 3.87 cm"));
-        Assert.assertTrue(outСontent.toString().contains("[Name2]: 0.43 cm"));
+        Assert.assertTrue(outСontent.toString().contains("[Name]: 3.87 cm2"));
+        Assert.assertTrue(outСontent.toString().contains("[Name2]: 0.43 cm2"));
     }
     
     
@@ -107,6 +107,6 @@ public class AppTest {
     private void setStringAsInputStream(String string) throws NoSuchFieldException,
     IllegalAccessException, IOException {
         InputStream arrayInputStream = new ByteArrayInputStream(string.getBytes());
-        IN_CONTENT.set(null , new BufferedReader(new InputStreamReader(arrayInputStream)));
+        inContent.set(null , new BufferedReader(new InputStreamReader(arrayInputStream)));
     }
 }
