@@ -37,8 +37,8 @@ public class AppTest {
         String [] arguments = {""};
         App.main(arguments);
         String act = OUT_CONTENT.toString();
-        String exp = "Either lower or upper interval boundary is not specified as program argument" 
-        + "Please specify both of them";
+        String exp = "Either lower or upper interval boundary is not specified as program argument."
+               + " Please specify both of them";
         Assert.assertTrue(act.contains(exp));
     }
     
@@ -48,8 +48,8 @@ public class AppTest {
         App.main(arguments);
         String act = OUT_CONTENT.toString();
         System.out.println(OUT_CONTENT.toString());
-        String exp = "Either lower or upper interval boundary is not specified as program argument" 
-        + "Please specify both of them";
+        String exp = "Either lower or upper interval boundary is not specified as program argument."
+                + " Please specify both of them";
         Assert.assertTrue(act.contains(exp));
     }
     

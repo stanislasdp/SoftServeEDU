@@ -1,5 +1,5 @@
 package test.task05;
-import com.softserve.edu.task05.ConverDigits;
+import com.softserve.edu.task05.ConvertDigit;
 import org.supercsv.io.CsvListReader;
 import org.supercsv.prefs.CsvPreference;
 import org.testng.Assert;
@@ -22,24 +22,21 @@ public class ConvertDigitsTest {
         CsvListReader listReader = new CsvListReader(new FileReader(FILE_WITH_TEST_DATA),
                 CsvPreference.STANDARD_PREFERENCE);
         List<String> currentLine;
-        List<Object[]> tmpList = new ArrayList<>();
+        List<Object[]> digitList = new ArrayList<>();
         while ((currentLine = listReader.read()) != null)
         {
             Object [] currLineData = {Integer.parseInt(currentLine.get(0)), currentLine.get(1)};
-            tmpList.add(currLineData);
+            digitList.add(currLineData);
         }
         listReader.close();
-        return tmpList.iterator();
+
+        return digitList.iterator();
     }
 
     @Test (dataProvider = "getDigits")
-    public void convertOneDigit(final int digit, final String strDigit) {
-        final String actualDigit = new ConverDigits().convertAnyIntToStringRepres(digit);
+    public void intFromDataProvIsPassedStringRepresentIsRet(final int digit, final String strDigit) {
+        final String actualDigit = new ConvertDigit().convertAnyIntToStringRepres(digit);
         Assert.assertEquals(actualDigit, strDigit);
     }
-
-
-
-
 
 }

@@ -30,7 +30,7 @@ public class App {
         }
         List<String> resultDigits;
         try {
-            resultDigits = Sequence.calculate(digit);
+            resultDigits = new Sequence().calculate(digit);
         } catch (WrongDigitFormatException wrDifExc) {
             System.out.println("Wrong digit format");
             return;

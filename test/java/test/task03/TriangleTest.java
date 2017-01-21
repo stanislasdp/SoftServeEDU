@@ -53,11 +53,14 @@ public class TriangleTest {
 
     @Test
     public void triangleIsInstaniated() throws TriangleInvalidArgException {
-        Triangle triangle = new Triangle("Name",3, 4 ,5);
+        //Arrange
         String expName = "Name";
         double expASide = 3;
         double expBSide = 4;
         double expCside = 5;
+        //Act
+        Triangle triangle = new Triangle("Name",3, 4 ,5);
+        //Assert
         Assert.assertEquals(triangle.getName(), expName);
         Assert.assertEquals(triangle.getASide(), expASide);
         Assert.assertEquals(triangle.getBSide(), expBSide);

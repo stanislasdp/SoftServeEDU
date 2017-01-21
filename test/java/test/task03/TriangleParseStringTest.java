@@ -1,6 +1,6 @@
 package test.task03;
 
-import com.softserve.edu.task03.ParsedTriangleFromString;
+import com.softserve.edu.task03.ParseTriangleFromString;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -11,46 +11,49 @@ public class TriangleParseStringTest {
 
     @Test (expectedExceptions = NullPointerException.class)
     public void nullStringIsPassedNPEisThrown() {
-        new ParsedTriangleFromString(null);
+        new ParseTriangleFromString(null);
     }
 
     @Test (expectedExceptions = IllegalArgumentException.class)
     public void oneArgumentIsPassedIllegalArgExcisThrown() {
-        new ParsedTriangleFromString("Name");
+        new ParseTriangleFromString("Name");
     }
 
     @Test (expectedExceptions = IllegalArgumentException.class)
     public void twoArgumentaIsPassedIllegalArgumentIsThrown() {
-        new ParsedTriangleFromString("Name, 1");
+        new ParseTriangleFromString("Name, 1");
     }
 
     @Test (expectedExceptions = IllegalArgumentException.class)
     public void threeArgumentaIsPassedIllegalArgumentIsThrown() {
-        new ParsedTriangleFromString("Name,1 ,3");
+        new ParseTriangleFromString("Name,1 ,3");
     }
 
     @Test (expectedExceptions = IllegalArgumentException.class)
     public void secondArgumentaIsNotDoubleIllegalArgumentIsThrown() {
-        new ParsedTriangleFromString("Name,1 ,r ,2");
+        new ParseTriangleFromString("Name,1 ,r ,2");
     }
 
     @Test (expectedExceptions = IllegalArgumentException.class)
     public void thirdArgumentaIsNotDoubleIllegalArgumentIsThrown() {
-        new ParsedTriangleFromString("Name,2 ,y ,2");
+        new ParseTriangleFromString("Name,2 ,y ,2");
     }
 
     @Test (expectedExceptions = IllegalArgumentException.class)
     public void fourthArgumentaIsNotDoubleIllegalArgumentIsThrown() {
-        new ParsedTriangleFromString("Name,2,5 ,t");
+        new ParseTriangleFromString("Name,2,5 ,t");
     }
 
 
     public void spacesBetweenArgumentsTriangleIsParsed() {
-        ParsedTriangleFromString parsedTriangle = new ParsedTriangleFromString("Name ,3 ,4 ,4");
+        //Arrange
         String expectedName = "Name";
         double expectedASide = 6.0;
         double expectedBSide = 7.0;
         double expectedCSide = 8.0;
+        //Act
+        ParseTriangleFromString parsedTriangle = new ParseTriangleFromString("Name ,3 ,4 ,4");
+        //Assert
         Assert.assertEquals(parsedTriangle.getParsedName(), expectedName);
         Assert.assertEquals(parsedTriangle.getParsedASide(), expectedASide);
         Assert.assertEquals(parsedTriangle.getParsedBSide(), expectedBSide);
@@ -58,11 +61,14 @@ public class TriangleParseStringTest {
     }
 
     public void noSpacesBetweenArgumentsTriangleIsParsed() {
-        ParsedTriangleFromString parsedTriangle = new ParsedTriangleFromString("Name,3,4,4");
+        //Arrange
         String expectedName = "Name";
         double expectedASide = 6.0;
         double expectedBSide = 7.0;
         double expectedCSide = 8.0;
+        //Act
+        ParseTriangleFromString parsedTriangle = new ParseTriangleFromString("Name,3,4,4");
+        //Assert
         Assert.assertEquals(parsedTriangle.getParsedName(), expectedName);
         Assert.assertEquals(parsedTriangle.getParsedASide(), expectedASide);
         Assert.assertEquals(parsedTriangle.getParsedBSide(), expectedBSide);

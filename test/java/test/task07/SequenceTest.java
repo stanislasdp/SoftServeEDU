@@ -12,30 +12,30 @@ import com.softserve.edu.task07.WrongDigitFormatException;
 public class SequenceTest {
 
     @Test (expectedExceptions = NullPointerException.class)
-    public void nullStrIsPassed() {
-        Sequence.calculate(null);
+    public void nullStrIsPassedNPEIsThrown() {
+       new Sequence().calculate(null);
     }
     
     @Test(expectedExceptions = WrongDigitFormatException.class)
-    public void notDigitIsPassed() {
-        Sequence.calculate("1f");
+    public void notDigitIsPassedWrongDigitFormatExcIsThrown() {
+        new Sequence().calculate("1r");
     }
     
     @Test (expectedExceptions = WrongDigitFormatException.class)
-    public void negativeDifisPassed() {
-        Sequence.calculate("-1");
+    public void negativeDigitIsPassedWrondDigitFormatExcIsThrown() {
+       new Sequence().calculate("-1");
     }
     
     @Test
-    public void simpleDigitPased() {
+    public void twoIsPasedListWithOneIsReturned() {
         List<String> expList = new ArrayList<String>();
         expList.add("1");
-        List<String> actList = Sequence.calculate("2");
+        List<String> actList = new Sequence().calculate("2");
         Assert.assertEquals(actList, expList);
     }
     
     @Test
-    public void notSimpleDigitPased() {
+    public void ninetySevenIsPassedListWithfromOneToNineIsReturned() {
         List<String> expList = new ArrayList<String>();
         expList.add("1");
         expList.add("2");
@@ -46,7 +46,7 @@ public class SequenceTest {
         expList.add("7");
         expList.add("8");
         expList.add("9");
-        List<String> actList = Sequence.calculate("97");
+        List<String> actList = new Sequence().calculate("97");
         Assert.assertEquals(actList, expList);
     }
 

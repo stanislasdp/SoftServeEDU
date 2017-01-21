@@ -14,7 +14,7 @@ public class AppTest
 {
 
     @Test
-    public void readMoscowAlgFromFile() throws Exception {
+    public void readMoscowAlgFromFileMoscowAlgIsReturned() throws Exception {
         String fileName = "testData/task06/Moscow.txt";
         String exp = "Moskow";
         String act = accessParseFileMethod(fileName);
@@ -22,7 +22,7 @@ public class AppTest
     }
     
     @Test
-    public void readPiterAlgFromFile() throws Exception {
+    public void readPiterAlgFromFilePiterAlgIsReturned() throws Exception {
         String fileName = "testData/task06/Piter.txt";
         String exp = "Piter";
         String act = accessParseFileMethod(fileName);
@@ -30,13 +30,13 @@ public class AppTest
     }
     
     @Test (expectedExceptions = Exception.class)
-    public void noKnownAlgorithm() throws Exception {
+    public void noKnownAlgorithmisPassedExceptionISThrown() throws Exception {
         String fileName = "testData/task06/noMoscownoPiter.txt";
         accessParseFileMethod(fileName);
     }
     
     @Test
-    public void getMoscowAlgorithmInstanceFromFactory()
+    public void getMoscowAlgorithmInstanceFromFactoryMoscowInstanceISReturned()
     {
         CountAlgorithmCalculation actInstance = App.algorithmFactory("Moskow");
         CountAlgorithmCalculation expInstance = new LuckyTicketsMoscow();
@@ -44,7 +44,7 @@ public class AppTest
     }
     
     @Test
-    public void getPiterAlgorithmInstanceFromFactory()
+    public void getPiterAlgorithmInstanceFromFactoryPiterInstanceIsReturned()
     {
         CountAlgorithmCalculation actInstance = App.algorithmFactory("Piter");
         CountAlgorithmCalculation expInstance = new LuckyTicketsPiter();
@@ -52,7 +52,7 @@ public class AppTest
     }
     
     @Test (expectedExceptions = IllegalArgumentException.class)
-    public void geNotSupAlgorithmInstanceFromFactory()
+    public void geNotSuppportedAlgorithmInstanceFromFactoryIllegArgExceIsThrown()
     {
         App.algorithmFactory("PitM");
     }

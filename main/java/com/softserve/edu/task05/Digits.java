@@ -243,6 +243,8 @@ public enum Digits {
      * return return digit suffix plural representation
      * (Enum's implementation may throw IllegalArgumentException if this operation
      * is not applicable for used enum)
+     * @throws   - implementation should throw IllegalArgumentException
+     * if passed digit not supported
      * @return  - String representation
      */
     abstract String getDigitSuffix();

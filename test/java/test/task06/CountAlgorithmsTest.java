@@ -11,7 +11,7 @@ public class CountAlgorithmsTest
 {
 
     @Test
-    public void moscowAlgorithmTest() {
+    public void moscowAlgorithmTest55251IsReturned() {
         CountAlgorithmCalculation algorithm = new LuckyTicketsMoscow();
         int expCount = 55251;
         int actCount = algorithm.calculateCount();
@@ -19,7 +19,7 @@ public class CountAlgorithmsTest
     }
     
     @Test
-    public void piterAlgorithmTest() {
+    public void piterAlgorithmTest55251IsReturned() {
         CountAlgorithmCalculation algorithm = new LuckyTicketsPiter();
         int expCount = 55251;
         int actCount = algorithm.calculateCount();

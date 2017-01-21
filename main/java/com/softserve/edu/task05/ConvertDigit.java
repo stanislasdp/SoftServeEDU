@@ -11,7 +11,7 @@ package com.softserve.edu.task05;
  * @version 1.1
  */
 public class ConvertDigit {
-    private ConvertDigitParts convertDigits = new ConvertDigitParts();
+    private ConvertDigitParts convertDigitsParts = new ConvertDigitParts();
     //ZERO is used in conditions to determine whether subsequent digits should be appended.
     private static final int ZERO = 0;
     //ONE is used to convert one char length digit to string and define first string digit element
@@ -50,45 +50,45 @@ public class ConvertDigit {
         String digitStringRepresent = digit + "";
         String digWithoutZeroes = removeTrailingZeroes(digitStringRepresent);
         if (digWithoutZeroes.startsWith("-")) {
-            convertDigits.addMinus();
+            convertDigitsParts.addMinus();
             digWithoutZeroes = digWithoutZeroes.substring(1);
         }
 
         switch (digWithoutZeroes.length()) {
             case TEN:
-                convertDigits.addBillions(digit);
+                convertDigitsParts.addBillions(digit);
                 break;
             case NINE:
-                convertDigits.addHundredsOfMillions(digit);
+                convertDigitsParts.addHundredsOfMillions(digit);
                 break;
             case EIGHT:
-                convertDigits.addDozensOfMillions(digit);
+                convertDigitsParts.addDozensOfMillions(digit);
                 break;
             case SEVEN:
-                convertDigits.addMillions(digit);
+                convertDigitsParts.addMillions(digit);
                 break;
             case SIX:
-                convertDigits.addHundredsOfThousands(digit);
+                convertDigitsParts.addHundredsOfThousands(digit);
                 break;
             case FIVE:
-                convertDigits.addDozensOfThousands(digit);
+                convertDigitsParts.addDozensOfThousands(digit);
                 break;
             case FOUR:
-                convertDigits.addThousands(digit);
+                convertDigitsParts.addThousands(digit);
                 break;
             case THREE:
-                convertDigits.addHundreds(digit);
+                convertDigitsParts.addHundreds(digit);
                 break;
             case TWO:
-                convertDigits.addTwoDigits(digit);
+                convertDigitsParts.addTwoDigits(digit);
                 break;
             case ONE:
-                convertDigits.addDigit(digit);
+                convertDigitsParts.addDigit(digit);
                 break;
             default:
                 throw new IllegalArgumentException("Not supported digit length");
         }
-        return convertDigits.toString();
+        return convertDigitsParts.toString();
     }
 
     /**

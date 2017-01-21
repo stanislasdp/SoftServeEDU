@@ -20,7 +20,7 @@ public class Sequence {
      * @throws NullPointerException iff digit argument is null
      * @throws NumberFormatException of digit argument is not natural digit
      */
-    public static List<String> calculate(final String digit) throws WrongDigitFormatException {
+    public List<String> calculate(final String digit) throws WrongDigitFormatException {
         if (digit == null) {
             throw new NullPointerException("argument is null");
         }

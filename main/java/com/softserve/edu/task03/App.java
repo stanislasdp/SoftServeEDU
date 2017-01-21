@@ -5,6 +5,7 @@
  * by size in descending order.
  */
 package com.softserve.edu.task03;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,55 +19,66 @@ import java.util.List;
  * @author Stas Kiryan
  * @version 1.0
  */
-public class App {
+public final class App {
 
-    /**
-     * Main method is used to process reading triangles from the Console
-     * ans print their sizes in centimeters to console
-     */
-    public static void main(final String[] args) {
-        Triangle nextTriangle;
+    private static final String ENTER_TRIANGLE_MESSAGE = "Enter triangle parameters";
+    private static final String ADD_MORE_TRIANGLE_MESSAGE = "Do you want to add one more triangle?";
+    private static final String TRIANG_HEAD_PRINT = "============= Triangles list: ===============";
+
+
+
+    public static void main(final String[] args) throws IOException {
+
+        new App().addTrianglesAndPrint();
+    }
+
+    private void addTrianglesAndPrint() throws IOException {
         List<Triangle> listOfTriangles = new ArrayList<>();
-
         while (true) {
-            try {
-                System.out.println("Enter triangle parameters");
-                nextTriangle = new Triangle(ConsoleHelper.readStringParam());
-                listOfTriangles.add(nextTriangle);
-                /*add read triangle to the list of triangles*/
-                System.out.println("Do you want to add one more triangle?");
-                String userAnswer = ConsoleHelper.readStringParam();
 
-                if ("yes".equalsIgnoreCase(userAnswer)
-                        || "y".equals(userAnswer)) {
+            System.out.println(ENTER_TRIANGLE_MESSAGE);
+            Triangle triangle;
+
+            try {
+                String readString = ConsoleHelper.readStringParam();
+                ParseTriangleFromString parsedTriangle = new ParseTriangleFromString(readString);
+                triangle = new Triangle(parsedTriangle.getParsedName(),
+                        parsedTriangle.getParsedASide(),
+                        parsedTriangle.getParsedBSide(),
+                        parsedTriangle.getParsedCSide());
+            }
+            catch (TriangleInvalidArgException invArgExc) {
+                System.out.println(invArgExc.getMessage());
+                continue;
+            }
+
+
+            listOfTriangles.add(triangle);
+                /*add read triangle to the list of triangles*/
+            System.out.println(ADD_MORE_TRIANGLE_MESSAGE);
+
+            String userAnswer = ConsoleHelper.readStringParam();
+
+            if ("yes".equalsIgnoreCase(userAnswer)
+                    || "y".equals(userAnswer)) {
                     /*if user decides to add one more rectangle
                     just start new loop iteration*/
-                    continue;
-                }
-
-                sortTriangleList(listOfTriangles, new ComparatorTriangleByDescArea());
-                    break;
-                    /*sort triangle list using comparator*/
-            } catch (TriangleInvalidArgException invArgExc) {
-                System.out.
-                        println("At least one entered triangle side is not a digit,"
-                                + "equal or less than zero or more than others");
-            } catch (TriangleInvalidArgCountException e) {
-                System.out.
-                        println("Too many or too few triangle arguments. Re-enter");
-            } catch (IOException e1)  {
-                System.out.println("Some I/O error has been occured");
+                continue;
             }
+            /*sort triangle list using comparator*/
+            sortTriangleList(listOfTriangles, new ComparatorTriangleByDescArea());
+            break;
         }
-        System.out.println("============= Triangles list: ===============");
+
+        System.out.println(TRIANG_HEAD_PRINT);
         /*print all read triangles to console*/
-        for (Triangle triangle : listOfTriangles) {
-            System.out.println(triangle);
+        for (Triangle triag : listOfTriangles) {
+            System.out.println(triag);
         }
     }
 
-    public static void sortTriangleList(List<Triangle> triangelList,
-                                        final Comparator<Triangle> comparator) {
+    private static void sortTriangleList(final List<Triangle> triangelList,
+                                         final Comparator<Triangle> comparator) {
         Collections.sort(triangelList, comparator);
     }
 }

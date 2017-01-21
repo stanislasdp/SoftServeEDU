@@ -3,14 +3,14 @@ package com.softserve.edu.task03;
 /**
  * Created by stas on 1/19/17.
  */
-public class ParsedTriangleFromString {
+public class ParseTriangleFromString {
 
     private String parsedName;
     private double parsedASide;
     private double parsedBSide;
     private double parsedCSide;
 
-    public ParsedTriangleFromString(String triangleLine) {
+    public ParseTriangleFromString(String triangleLine) {
         checkTriangleString(triangleLine);
     }
     public String getParsedName() {

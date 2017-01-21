@@ -43,7 +43,7 @@ public class AppIntegrationTest {
     }
 
     @AfterMethod
-    public void clearStreams() {
+    public void clearStream() {
         outСontent.reset();
     }
 
@@ -102,8 +102,7 @@ public class AppIntegrationTest {
         Assert.assertTrue(outСontent.toString().contains("[Name2]: 0.43 cm2"));
     }
     
-    
-    
+
     private void setStringAsInputStream(String string) throws NoSuchFieldException,
     IllegalAccessException, IOException {
         InputStream arrayInputStream = new ByteArrayInputStream(string.getBytes());

@@ -14,10 +14,10 @@
     </test>
 	<test name="task03">
         <classes>
-            <class name="test.task03.AppTest"/>
-			<class name="test.task03.ReadTrianglesTest"/>
+            <class name="test.task03.AppIntegrationTest"/>
 			<class name="test.task03.TriangleSortTest"/>
-			<class name="test.task03.TriangleSortTest"/>
+			<class name="test.task03.TriangleParseStringTest"/>
+			<class name="test.task03.TriangleTest"/>
         </classes>
     </test>
 	<test name="task04">
